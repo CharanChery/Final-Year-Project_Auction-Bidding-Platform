@@ -74,7 +74,7 @@ JWT_SECRET=your_secret_key
    ```
    npm start
    ```
-Access the platform at http://localhost:3000.
+Access the platform at http://localhost:5501.
 
 ---
 
