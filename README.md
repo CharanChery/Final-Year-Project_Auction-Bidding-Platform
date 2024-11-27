@@ -29,7 +29,7 @@ This project is a **web-based auction bidding platform** designed to facilitate 
 
 ## Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript, ReactJS
+- **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JWT-based secure login system
