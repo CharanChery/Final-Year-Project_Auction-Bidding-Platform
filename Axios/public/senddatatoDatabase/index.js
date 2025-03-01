@@ -7,6 +7,7 @@ const sendbutton = document.getElementById('Sendbutton')
 const textConformation = document.getElementById('conformation')
 const form =document.getElementById('product_form')
 const ptime = document.getElementById('Ptime')
+const baseUrl = window.location.origin
 
 sendbutton.addEventListener('click',async(e)=>{
     e.preventDefault()
@@ -29,7 +30,17 @@ sendbutton.addEventListener('click',async(e)=>{
 
             // Set the time to 12:00 PM for the future date
             futureDate.setHours(12, 0, 0, 0);
-            const response = await axios.post('http://localhost:5501/api/v2/addProducts',{
+            const apipathAddproducts = "/api/v2/addProducts"
+            const fullUrlAddproducts = `${baseUrl}${apipathAddproducts}`
+            // const response = await axios.post('http://localhost:5501/api/v2/addProducts',{
+            //     "name":pname.value,
+            //     "description": pdescription.value,
+            //     "initial_price":pprice.value,
+            //     "category":pcategory.value,
+            //     "url" : purl.value,
+            //     "bid_end_date":futureDate
+            // })
+            const response = await axios.post(fullUrlAddproducts,{
                 "name":pname.value,
                 "description": pdescription.value,
                 "initial_price":pprice.value,

@@ -1,3 +1,4 @@
+const baseUrl = window.location.origin
 document.addEventListener('DOMContentLoaded', () => {
     const h1 = document.createElement('h1')
     h1.textContent = 'WELCOME ADMIN'
@@ -16,7 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.main-content').appendChild(h1)
         document.querySelector('.main-content').appendChild(input)
 
-        const response = await axios.get('http://localhost:5501/api/v5/admin/getallusersinfo')
+        const apipathGetallusersinfo = "/api/v5/admin/getallusersinfo"
+        const fullUrlGetallusersinfo = `${baseUrl}${apipathGetallusersinfo}`
+
+        // const response = await axios.get('http://localhost:5501/api/v5/admin/getallusersinfo')
+        const response = await axios.get(fullUrlGetallusersinfo)
         //console.log(response.data.msg)
         const data = response.data.msg
         //console.log(data)
@@ -51,7 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.main-content').appendChild(input)
 
 
-        const response = await axios.get('http://localhost:5501/api/v5/admin/getallitemsinfo')
+        const apipathGetallitemsinfo = "/api/v5/admin/getallitemsinfo"
+        const fullUrlGetallitemsinfo = `${baseUrl}${apipathGetallitemsinfo}`
+        // const response = await axios.get('http://localhost:5501/api/v5/admin/getallitemsinfo')
+        const response = await axios.get(fullUrlGetallitemsinfo)
         const data= response.data.msg
         //console.log(data)
         displayallitems(data)
@@ -125,10 +133,12 @@ function displayallusers(data){
         users.appendChild(card);
 
 
-
+        const apipathDeleteuser = "/api/v5/admin/deleteuser"
+        const fullUrlDeleteuser = `${baseUrl}${apipathDeleteuser}`
         button.addEventListener('click',async()=>{
             document.getElementById(item._id).style.display = 'none'
-            const delproduct = await axios.post('http://localhost:5501/api/v5/admin/deleteuser',{url_user_id: item._id});
+            // const delproduct = await axios.post('http://localhost:5501/api/v5/admin/deleteuser',{url_user_id: item._id});
+            const delproduct = await axios.post(fullUrlDeleteuser, {url_user_id: item._id});
             console.log(delproduct.data.msg)
 
         })
@@ -172,9 +182,12 @@ function displayallitems(data){
         card.appendChild(deldiv)
         products.appendChild(card);
 
+        const apipathDeleteproducts = "/api/v5/admin/deleteproducts"
+        const fullUrlDeleteproducts = `${baseUrl}${apipathDeleteproducts}`
         button.addEventListener('click',async()=>{
             document.getElementById(item._id).style.display = 'none'
-            const delproduct = await axios.post('http://localhost:5501/api/v5/admin/deleteproducts',{url_product_id: item._id});
+            // const delproduct = await axios.post('http://localhost:5501/api/v5/admin/deleteproducts',{url_product_id: item._id});
+            const delproduct = await axios.post(fullUrlDeleteproducts,{url_product_id: item._id});
             console.log(delproduct.data.msg)
         })
     })

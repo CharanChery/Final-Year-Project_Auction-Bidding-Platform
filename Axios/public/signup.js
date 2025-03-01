@@ -10,17 +10,22 @@ const otpbutton = document.getElementById("otp_generator");
 const otp_input = document.getElementById("otp_input");
 const message = document.getElementById("username-message");
 let temp = 0;
-
+const baseUrl = window.location.origin;
 
 username.addEventListener("input", async (event) => {
   const Username = event.target.value;
   try {
-    const response = await axios.post(
-      "http://localhost:5501/api/v1/details/checkUsername",
-      {
-        username: Username,
-      }
-    );
+    const apipathCheckusername = "/api/v1/details/checkUsername";
+    const fullurlCheckusername = `${baseUrl}${apipathCheckusername}`;
+    // const response = await axios.post(
+    //   "http://localhost:5501/api/v1/details/checkUsername",
+    //   {
+    //     username: Username,
+    //   }
+    // );
+    const response = await axios.post(fullurlCheckusername, {
+      username: Username,
+    });
     if (response.data.msg === "exits") {
       username.classList.add("glow-border");
       username.style.border = "2px solid red";
@@ -43,12 +48,17 @@ email.addEventListener("input", async (event) => {
   const Email = event.target.value;
 
   try {
-    const response = await axios.post(
-      "http://localhost:5501/api/v1/details/checkEmail",
-      {
-        email: Email,
-      }
-    );
+    const apipathCheckemail = "/api/v1/details/checkEmail";
+    const fullurlCheckemail = `${baseUrl}${apipathCheckemail}`;
+    // const response = await axios.post(
+    //   "http://localhost:5501/api/v1/details/checkEmail",
+    //   {
+    //     email: Email,
+    //   }
+    // );
+    const response = await axios.post(fullurlCheckemail, {
+      email: Email,
+    });
     if (response.data.msg === "exits") {
       email.classList.add("glow-border");
       email.style.border = "2px solid red";
@@ -64,16 +74,20 @@ email.addEventListener("input", async (event) => {
   }
 });
 
-
 otpbutton.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post(
-      "http://localhost:5501/api/v1/details/verify-otp",
-      {
-        email: email.value,
-      }
-    );
+    const apipathVerifyotp = "/api/v1/details/verify-otp";
+    const fullurlVerifyotp = `${baseUrl}${apipathVerifyotp}`;
+    // const response = await axios.post(
+    //   "http://localhost:5501/api/v1/details/verify-otp",
+    //   {
+    //     email: email.value,
+    //   }
+    // );
+    const response = await axios.post(fullurlVerifyotp, {
+      email: email.value,
+    });
     if (response.status === 200) {
       temp = response.data.dataa;
       p_wrongusername.innerText = "OTP SEND";
@@ -100,15 +114,28 @@ signupButton.addEventListener("click", async (e) => {
     otpbutton.style.border = "1px solid red";
   } else if (password1.value === password2.value) {
     try {
+      const apipathSignup = "/api/v1/details/signup"
+      const fullurlSignup = `${baseUrl}${apipathSignup}`
+      // const response = await axios.post(
+      //   "http://localhost:5501/api/v1/details/signup",
+      //   {
+      //     username: username.value,
+      //     email: email.value,
+      //     password: password1.value,
+      //     otp: otp_input.value,
+      //     data: temp,
+      //     fullname: fullname.value,
+      //   }
+      // );
       const response = await axios.post(
-        "http://localhost:5501/api/v1/details/signup",
+        fullurlSignup,
         {
           username: username.value,
           email: email.value,
           password: password1.value,
           otp: otp_input.value,
           data: temp,
-          fullname: fullname.value
+          fullname: fullname.value,
         }
       );
       if (response.data.msg === "User already exists") {
@@ -125,4 +152,3 @@ signupButton.addEventListener("click", async (e) => {
     }
   }
 });
-

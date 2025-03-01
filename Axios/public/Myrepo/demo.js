@@ -1,3 +1,4 @@
+const baseUrl = window.location.origin
 document.addEventListener("DOMContentLoaded", async () => {
   const productContainer = document.getElementById("product-container");
   const rightproducts = document.getElementById("rightproducts");
@@ -9,8 +10,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const urlusername = urlParams.get("username");
     let points = document.getElementById("points");
 
+    const apipathGetuserproducts = "/api/v3/getUserProducts"
+    const fullUrlGetuserproducts = `${baseUrl}${apipathGetuserproducts}`
+    // const getrightproducts = await axios.get(
+    //   "http://localhost:5501/api/v3/getUserProducts",
+    //   {
+    //     params: {
+    //       username: urlusername,
+    //     },
+    //   }
+    // );
     const getrightproducts = await axios.get(
-      "http://localhost:5501/api/v3/getUserProducts",
+      fullUrlGetuserproducts,
       {
         params: {
           username: urlusername,
@@ -22,21 +33,43 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     demoproducts.forEach(async (productId) => {
       try {
+        const apipathDeleteproducts = "/api/v3/deleteProducts"
+        const fullUrlDeleteproducts = `${baseUrl}${apipathDeleteproducts}`
+        // const deleteresponse = await axios.post(
+        //   "http://localhost:5501/api/v3/deleteProducts",
+        //   { urlusername: urlusername, productId: productId }
+        // );
         const deleteresponse = await axios.post(
-          "http://localhost:5501/api/v3/deleteProducts",
+          fullUrlDeleteproducts,
           { urlusername: urlusername, productId: productId }
         );
 
         //updating coins
+        const apipathGetcoins = "/api/v2/getcoins"
+        const fullUrlGetcoins = `${baseUrl}${apipathGetcoins}`
+        // const getcoins = await axios.post(
+        //   "http://localhost:5501/api/v2/getcoins",
+        //   { urlusername: urlusername }
+        // );
         const getcoins = await axios.post(
-          "http://localhost:5501/api/v2/getcoins",
+          fullUrlGetcoins,
           { urlusername: urlusername }
         );
         points.textContent = getcoins.data.data;
-
+        
+        const apipathGetproductdetail = "/api/v2/getproductdetail"
+        const fullUrlGetproductdetail = `${baseUrl}${apipathGetproductdetail}`
         if (deleteresponse.data.msg === "matched") {
+          // let productdetail = await axios.get(
+          //   "http://localhost:5501/api/v2/getproductdetail",
+          //   {
+          //     params: {
+          //       productid: productId,
+          //     },
+          //   }
+          // );
           let productdetail = await axios.get(
-            "http://localhost:5501/api/v2/getproductdetail",
+            fullUrlGetproductdetail,
             {
               params: {
                 productid: productId,

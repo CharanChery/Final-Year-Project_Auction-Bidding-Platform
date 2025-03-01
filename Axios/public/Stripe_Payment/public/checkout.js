@@ -1,3 +1,4 @@
+const baseUrl = window.location.origin
 document.addEventListener("DOMContentLoaded", () => {
   // This is your test publishable API key.
   const stripe = Stripe(
@@ -74,14 +75,24 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true);
 
     //window.location.href =fullurl
+    
+    const apipathStripe_paymentdone = "/Stripe_Payment/done.html"
+    const fullUrlStripe_paymentdone = `${baseUrl}${apipathStripe_paymentdone}`
+    // const { error, paymentIntent } = await stripe.confirmPayment({
+    //   elements,
+    //   confirmParams: {
+    //     return_url: "http://localhost:5501/Stripe_Payment/done.html",
+    //   },
 
+    // });
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:5501/Stripe_Payment/done.html",
+        return_url: fullUrlStripe_paymentdone,
       },
 
     });
+
 
     if (error) {
       showMessage(error.message);
@@ -94,7 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
       //   amount: amount 
       // }));
       // Redirect to done.html
-      window.location.href = "http://localhost:5501/Stripe_Payment/done.html";
+      
+      
+      /* window.location.href = "http://localhost:5501/Stripe_Payment/done.html"; */
+      window.location.href = fullUrlStripe_paymentdone;
+
       //http://localhost:5501/Stripe_Payment/done.html?payment_intent=pi_3P8XJ3SGD6nuXoPY00U6iXba&payment_intent_client_secret=pi_3P8XJ3SGD6nuXoPY00U6iXba_secret_vHq1eN6Bi2sQeP9PRuZCDiLSO&redirect_status=succeeded
     // Redirect after a delay
     // setTimeout(() => {

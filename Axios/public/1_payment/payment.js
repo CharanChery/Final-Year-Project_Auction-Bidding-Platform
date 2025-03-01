@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Code to execute after the HTML document has been fully loaded
   let img = document.getElementById("qrcode");
   let upi_id = document.getElementById("upi_id");
+  const baseUrl = window.location.origin
   document
     .getElementById("paymentMethod")
     .addEventListener("change", function () {
@@ -30,8 +31,17 @@ document.addEventListener("DOMContentLoaded", function () {
     //console.log(urlusername , tid)
     try {
       console.log(urlusername, tid);
+      const apipathSendvalidatetransaction = "/api/v4/sendvalidateTransaction"
+      const fullurlSendvalidateTransaction = `${baseUrl}${apipathSendvalidatetransaction}`
+      // const response = await axios.post(
+      //   "http://localhost:5501/api/v4/sendvalidateTransaction",
+      //   {
+      //     username: urlusername,
+      //     Transaction_Id: tid,
+      //   }
+      // );
       const response = await axios.post(
-        "http://localhost:5501/api/v4/sendvalidateTransaction",
+        fullurlSendvalidateTransaction,
         {
           username: urlusername,
           Transaction_Id: tid,

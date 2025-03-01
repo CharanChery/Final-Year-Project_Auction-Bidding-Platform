@@ -1,3 +1,4 @@
+const baseUrl = window.location.origin
 document.addEventListener("DOMContentLoaded", async () => {
   const bidInput = document.getElementById("bid-amount");
 
@@ -25,15 +26,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(queryString);
   const urlusername = urlParams.get("username");
   const url_product_id = urlParams.get("id");
-  const getcoins = await axios.post("http://localhost:5501/api/v2/getcoins", {
+  const apipathGetcoins = "/api/v2/getcoins"
+  const fullUrlGetcoins = `${baseUrl}${apipathGetcoins}`
+  // const getcoins = await axios.post("http://localhost:5501/api/v2/getcoins", {
+  //   urlusername: urlusername,
+  // });
+  const getcoins = await axios.post(fullUrlGetcoins, {
     urlusername: urlusername,
   });
 
   //console.log("checking email", getcoins.data.data)
   points.textContent = getcoins.data.data;
-
+  const apipathGetproductdetail = "/api/v2/getproductdetail"
+  const fullUrlGetproductdetail = `${baseUrl}${apipathGetproductdetail}`
+  // let productdetail = await axios.get(
+  //   "http://localhost:5501/api/v2/getproductdetail",
+  //   {
+  //     params: {
+  //       productid: url_product_id,
+  //     },
+  //   }
+  // );
   let productdetail = await axios.get(
-    "http://localhost:5501/api/v2/getproductdetail",
+    fullUrlGetproductdetail,
     {
       params: {
         productid: url_product_id,
@@ -76,8 +91,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   try {
+    const apipathGetproductdetail = "/api/v2/getproductdetail"
+    const fullUrlGetproductdetail = `${baseUrl}${apipathGetproductdetail}`
+    // let productdetail = await axios.get(
+    //   "http://localhost:5501/api/v2/getproductdetail",
+    //   {
+    //     params: {
+    //       productid: url_product_id,
+    //     },
+    //   }
+    // );
     let productdetail = await axios.get(
-      "http://localhost:5501/api/v2/getproductdetail",
+      fullUrlGetproductdetail,
       {
         params: {
           productid: url_product_id,
@@ -126,8 +151,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         e.preventDefault();
         const currentAmount = parseInt(bidInput.value);
         try {
+          const apipathAdduserproducts = "/api/v3/adduserProducts"
+          const fullUrlAdduserproducts = `${baseUrl}${apipathAdduserproducts}`
+          // const response = await axios.post(
+          //   "http://localhost:5501/api/v3/adduserProducts",
+          //   { urlusername, url_product_id, currentAmount }
+          // );
           const response = await axios.post(
-            "http://localhost:5501/api/v3/adduserProducts",
+            fullUrlAdduserproducts,
             { urlusername, url_product_id, currentAmount }
           );
           if (response.data.data === "notfound") {

@@ -1,21 +1,26 @@
 const p_wrongusername = document.getElementById("p_wrongusername");
 const submit = document.getElementById("loginButton");
 const url = "http://localhost:5501/api/v1/details/login";
-
+const baseUrl = window.location.origin
 submit.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const name = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
+  const apipathLogin = "/api/v1/details/login"
+  const fullurlLogin = `${baseUrl}${apipathLogin}`
   try {
-    // console.log(name, password);
-    
+    // const response = await axios.post(
+    //   "http://localhost:5501/api/v1/details/login",
+    //   { name, password }
+    // );
     const response = await axios.post(
-      "http://localhost:5501/api/v1/details/login",
+      fullurlLogin,
       { name, password }
     );
-    console.log(response.data.msg)
+    
+    // console.log(response)
     if (response.status === 200) {
       if (response.data.msg === "Username_notfound") {
         p_wrongusername.innerText = "Invalid username";
@@ -27,8 +32,16 @@ submit.addEventListener("click", async (e) => {
         p_wrongusername.innerText = "WELCOME";
         p_wrongusername.style.color = "green";
 
+        const apipathGetusername = "/api/v1/details/getusername"
+        const fullurlGetusername = `${baseUrl}${apipathGetusername}`
+        // const userResponse = await axios.post(
+        //   "http://localhost:5501/api/v1/details/getusername",
+        //   {
+        //     email: name,
+        //   }
+        // );
         const userResponse = await axios.post(
-          "http://localhost:5501/api/v1/details/getusername",
+          fullurlGetusername,
           {
             email: name,
           }

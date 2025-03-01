@@ -1,10 +1,16 @@
+const baseUrl = window.location.origin
 document.addEventListener("DOMContentLoaded", async () => {
   const productContainer = document.getElementById("product-container");
 
   // Array of product data (name, image URL, new price, old price)
   try {
+    const apipathDashboard = "/api/v2/dashboard"
+    const fullUrlDashboard = `${baseUrl}${apipathDashboard}`
+    // const leftproducts = await axios.get(
+    //   "http://localhost:5501/api/v2/dashboard"
+    // );
     const leftproducts = await axios.get(
-      "http://localhost:5501/api/v2/dashboard"
+      fullUrlDashboard
     );
     const products = leftproducts.data.data;
 
@@ -81,14 +87,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(queryString);
     const urlusername = urlParams.get("username");
 
-    const getcoins = await axios.post("http://localhost:5501/api/v2/getcoins", {
+    const apipathGetcoins = "/api/v2/getcoins"
+    const fullUrlGetcoins = `${baseUrl}${apipathGetcoins}`
+    // const getcoins = await axios.post("http://localhost:5501/api/v2/getcoins", {
+    //   urlusername: urlusername,
+    // });
+    const getcoins = await axios.post(fullUrlGetcoins, {
       urlusername: urlusername,
     });
     points.textContent = getcoins.data.data;
 
     const notifNum = document.getElementById("notif-num");
+    const apipathNotificationproducts = "/api/v3/notificationProducts"
+    const fullUrlNotificationproducts = `${baseUrl}${apipathNotificationproducts}`
+    // const notification = await axios.post(
+    //   "http://localhost:5501/api/v3/notificationProducts",
+    //   {
+    //     urlusername: urlusername,
+    //   }
+    // );
     const notification = await axios.post(
-      "http://localhost:5501/api/v3/notificationProducts",
+      fullUrlNotificationproducts,
       {
         urlusername: urlusername,
       }

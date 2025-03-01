@@ -1,3 +1,4 @@
+const baseUrl = window.location.origin;
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     let points = document.getElementById("points");
@@ -5,13 +6,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(queryString);
     const urlusername = urlParams.get("username");
     const notifNum = document.getElementById("notif-num");
-    const notification = await axios.post(
-      "http://localhost:5501/api/v3/notificationProducts",
-      {
-        urlusername: urlusername,
-      }
-    );
-    const getcoins = await axios.post("http://localhost:5501/api/v2/getcoins", {
+    const apipathNotificationproducts = "/api/v3/notificationProducts";
+    const fullUrlNotificationproducts = `${baseUrl}${apipathNotificationproducts}`;
+    // const notification = await axios.post(
+    //   "http://localhost:5501/api/v3/notificationProducts",
+    //   {
+    //     urlusername: urlusername,
+    //   }
+    // );
+    const notification = await axios.post(fullUrlNotificationproducts, {
+      urlusername: urlusername,
+    });
+    const apipathGetcoins = "/api/v2/getcoins";
+    const fullUrlGetcoins = `${baseUrl}${apipathGetcoins}`;
+    // const getcoins = await axios.post("http://localhost:5501/api/v2/getcoins", {
+    //   urlusername: urlusername,
+    // });
+    const getcoins = await axios.post(fullUrlGetcoins, {
       urlusername: urlusername,
     });
     points.textContent = getcoins.data.data;
@@ -108,11 +119,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             window.location.href = fullurl;
           });
         }
+
+        const apipathMarkasread = "/api/v3/markasread"
+        const fullUrlMarkasread = `${baseUrl}${apipathMarkasread}`
         document
           .getElementById("markread")
           .addEventListener("click", async () => {
+            // const notification = await axios.post(
+            //   "http://localhost:5501/api/v3/markasread",
+            //   {
+            //     urlusername: urlusername,
+            //   }
+            // );
             const notification = await axios.post(
-              "http://localhost:5501/api/v3/markasread",
+              fullUrlMarkasread,
               {
                 urlusername: urlusername,
               }

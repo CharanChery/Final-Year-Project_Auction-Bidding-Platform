@@ -27,30 +27,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = fullurl;
   });
 
-  console.log("hellooooo")
+  console.log("hellooooo");
   const productContainer = document.getElementById("product-container");
   const rightproducts = document.getElementById("rightproducts");
   const ownproducts = document.getElementById("own-two");
   let points = document.getElementById("points");
 
-
   try {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const urlusername = urlParams.get("username");
-    const getcoin = await axios.post('http://localhost:5501/api/v2/getcoins',{urlusername: urlusername});
-    points.textContent = getcoin.data.data
-    console.log("coins",points.textContent)
+    const apipathGetcoins = "/api/v2/getcoins";
+    const fullUrlGetcoins = `${baseUrl}${apipathGetcoins}`;
+    // const getcoin = await axios.post('http://localhost:5501/api/v2/getcoins',{urlusername: urlusername});
+    const getcoin = await axios.post(fullUrlGetcoins, {
+      urlusername: urlusername,
+    });
+    points.textContent = getcoin.data.data;
+    console.log("coins", points.textContent);
 
-    console.log("notif")
+    console.log("notif");
     const notifNum = document.getElementById("notif-num");
     try {
-      const notification = await axios.post(
-        "http://localhost:5501/api/v3/notificationProducts",
-        {
-          urlusername: urlusername,
-        }
-      );
+      const apipathNotificationproducts = "/api/v3/notificationProducts";
+      const fullUrlNotificationproducts = `${baseUrl}${apipathNotificationproducts}`;
+      // const notification = await axios.post(
+      //   "http://localhost:5501/api/v3/notificationProducts",
+      //   {
+      //     urlusername: urlusername,
+      //   }
+      // );
+      const notification = await axios.post(fullUrlNotificationproducts, {
+        urlusername: urlusername,
+      });
       if (notification.data.msg === "yes") {
         notifNum.textContent = notification.data.datacount;
       } else {
@@ -61,44 +70,68 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     //console.log("count",notification.data.datacount)
-    console.log(notifNum.textContent)
+    console.log(notifNum.textContent);
 
-    console.log("before")
-    const getrightproducts = await axios.get(
-      "http://localhost:5501/api/v3/getUserProducts",
-      {
-        params: {
-          username: urlusername,
-        },
-      }
-    );
-
+    console.log("before");
+    const apipathGetuserproducts = "/api/v3/getUserProducts";
+    const fullUrlGetuserproducts = `${baseUrl}${apipathGetuserproducts}`;
+    // const getrightproducts = await axios.get(
+    //   "http://localhost:5501/api/v3/getUserProducts",
+    //   {
+    //     params: {
+    //       username: urlusername,
+    //     },
+    //   }
+    // );
+    const getrightproducts = await axios.get(fullUrlGetuserproducts, {
+      params: {
+        username: urlusername,
+      },
+    });
     const demoproducts = getrightproducts.data.data;
 
-    console.log(demoproducts)
+    console.log(demoproducts);
 
     demoproducts.forEach(async (productId) => {
       try {
-        const deleteresponse = await axios.post(
-          "http://localhost:5501/api/v3/deleteProducts",
-          { urlusername: urlusername, productId: productId }
-        );
+        const apipathDeleteproducts = "/api/v3/deleteProducts";
+        const fullUrlDeleteproducts = `${baseUrl}${apipathDeleteproducts}`;
+        // const deleteresponse = await axios.post(
+        //   "http://localhost:5501/api/v3/deleteProducts",
+        //   { urlusername: urlusername, productId: productId }
+        // );
+        const deleteresponse = await axios.post(fullUrlDeleteproducts, {
+          urlusername: urlusername,
+          productId: productId,
+        });
 
         //updating coins
-        const getcoins = await axios.post(
-          "http://localhost:5501/api/v2/getcoins",
-          { urlusername: urlusername }
-        );
+        const apipathGetcoins = "/api/v2/getcoins";
+        const fullUrlGetcoins = `${baseUrl}${apipathGetcoins}`;
+        // const getcoins = await axios.post(
+        //   "http://localhost:5501/api/v2/getcoins",
+        //   { urlusername: urlusername }
+        // );
+        const getcoins = await axios.post(fullUrlGetcoins, {
+          urlusername: urlusername,
+        });
         points.textContent = getcoins.data.data;
+        const apipathGetproductdetail = "/api/v2/getproductdetail";
+        const fullUrlGetproductdetail = `${baseUrl}${apipathGetproductdetail}`;
         if (deleteresponse.data.msg === "matched") {
-          let productdetail = await axios.get(
-            "http://localhost:5501/api/v2/getproductdetail",
-            {
-              params: {
-                productid: productId,
-              },
-            }
-          );
+          // let productdetail = await axios.get(
+          //   "http://localhost:5501/api/v2/getproductdetail",
+          //   {
+          //     params: {
+          //       productid: productId,
+          //     },
+          //   }
+          // );
+          let productdetail = await axios.get(fullUrlGetproductdetail, {
+            params: {
+              productid: productId,
+            },
+          });
 
           if (productdetail.data.data.userID === urlusername) {
             var card = document.createElement("div");
@@ -167,8 +200,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       //demoproducts.forEach(async(productId)=> {
       myproducts.forEach(async (productId) => {
         try {
+          const apipathGetproductdetail = "/api/v2/getproductdetail";
+          const fullUrlGetproductdetail = `${baseUrl}${apipathGetproductdetail}`;
+          // let productdetail = await axios.get(
+          //   "http://localhost:5501/api/v2/getproductdetail",
+          //   {
+          //     params: {
+          //       productid: productId,
+          //     },
+          //   }
+          // );
           let productdetail = await axios.get(
-            "http://localhost:5501/api/v2/getproductdetail",
+           fullUrlGetproductdetail,
             {
               params: {
                 productid: productId,
@@ -231,15 +274,15 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const urlusername = urlParams.get("username");
 
-document.getElementById('home').addEventListener('click',()=>{
-  const newpage = '../dashboard/dashboard.html'
+document.getElementById("home").addEventListener("click", () => {
+  const newpage = "../dashboard/dashboard.html";
   // C:\Users\chokk\OneDrive\Desktop\axios\public\notificatiofolder\notif.html
-  let fullurl = newpage+'?username='+encodeURIComponent(urlusername)
-  window.location.href =fullurl 
+  let fullurl = newpage + "?username=" + encodeURIComponent(urlusername);
+  window.location.href = fullurl;
 });
 
 document.getElementById("profile").addEventListener("click", () => {
-  const newpage = '../Profilepage/profile.html';
+  const newpage = "../Profilepage/profile.html";
   let fullurl = newpage + "?username=" + encodeURIComponent(urlusername);
   window.location.href = fullurl;
 });
@@ -249,4 +292,3 @@ document.getElementById("logout").addEventListener("click", () => {
   let fullurl = newpage; //+'?username='+encodeURIComponent(urlusername)
   window.location.href = fullurl;
 });
-

@@ -47,19 +47,13 @@ const checkEmail = async(req,res)=>{
 
 const gettask = async (req, res) => {
     try {
-
-        console.log("Request body:", req.body);
-        
         const { name, password} = req.body;
 
-
         const detail = await DetailSchema.findOne({ email: name });
-        console.log("User Found in DB:", detail);
         if (!detail) {
             return res.status(200).json({ msg: 'Username_notfound', reason: ' user Invalid credentials' });
         }
         const isPasswordValid = await bcrypt.compare(password, detail.password);
-        console.log("Password Valid:", isPasswordValid);
 
         if (isPasswordValid) {
             return res.status(200).json({ msg: 'LOGGED IN' });
@@ -117,13 +111,13 @@ const sendotp=async(req,res)=>{
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'theonlineman0718@gmail.com', 
-                pass: 'jqea ihuv garb qxeu' 
+                user: 'narayanamjnanacharan@gmail.com', 
+                pass: 'dmdn jxsv oiuc icyx' 
             }
         });
 
         const mailOptions = {
-            from: 'theonlineman0718@gmail.com',
+            from: 'narayanamjnanacharan@gmail.com',
             to: email,
             subject: 'OTP Verification',
             text: `Your OTP for verification is: ${otp}`
@@ -190,13 +184,13 @@ const sendforgototp=async(req,res)=>{
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'theonlineman0718@gmail.com', 
-                    pass: 'jqea ihuv garb qxeu' 
+                    user: 'narayanamjnanacharan@gmail.com', 
+                    pass: 'dmdnjxsvoiucicyx' 
                 }
             });
         
             const mailOptions = {
-                from: 'theonlineman0718@gmail.com',
+                from: 'narayanamjnanacharan@gmail.com',
                 to: email,
                 subject: 'OTP Verification',
                 text: `Your OTP for verification is: ${otp}`
