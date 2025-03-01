@@ -13,7 +13,7 @@ submit.addEventListener("click", async (e) => {
       "http://localhost:5501/api/v1/details/login",
       { name, password }
     );
-    // console.log(response)
+    console.log(response)
     if (response.status === 200) {
       if (response.data.msg === "Username_notfound") {
         p_wrongusername.innerText = "Invalid username";
