@@ -9,11 +9,13 @@ submit.addEventListener("click", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
+    // console.log(name, password);
+    
     const response = await axios.post(
       "http://localhost:5501/api/v1/details/login",
       { name, password }
     );
-    console.log(response)
+    console.log(response.data.msg)
     if (response.status === 200) {
       if (response.data.msg === "Username_notfound") {
         p_wrongusername.innerText = "Invalid username";

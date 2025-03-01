@@ -47,13 +47,19 @@ const checkEmail = async(req,res)=>{
 
 const gettask = async (req, res) => {
     try {
+
+        console.log("Request body:", req.body);
+        
         const { name, password} = req.body;
 
+
         const detail = await DetailSchema.findOne({ email: name });
+        console.log("User Found in DB:", detail);
         if (!detail) {
             return res.status(200).json({ msg: 'Username_notfound', reason: ' user Invalid credentials' });
         }
         const isPasswordValid = await bcrypt.compare(password, detail.password);
+        console.log("Password Valid:", isPasswordValid);
 
         if (isPasswordValid) {
             return res.status(200).json({ msg: 'LOGGED IN' });
