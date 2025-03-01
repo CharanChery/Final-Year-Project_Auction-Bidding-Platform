@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const password2 = document.getElementById('password2')
     const text = document.getElementById('p_wrongusername')
     const inputs = document.getElementsByName('input')
+    const baseUrl = window.location.origin
     
     document.getElementById('saveButton').addEventListener('click',async(e)=>{
         e.preventDefault()
@@ -19,7 +20,10 @@ document.addEventListener('DOMContentLoaded',()=>{
             console.log(urlusername)
 
             try {
-                const response = await axios.post('http://localhost:5501/api/v1/details/updatepassword', { urlusername, temppassword });
+                const apipathUpdatepassword = "/api/v1/details/updatepassword"
+                const fullUrlUpdatepassword = `${baseUrl}${apipathUpdatepassword}`
+                // const response = await axios.post('http://localhost:5501/api/v1/details/updatepassword', { urlusername, temppassword });
+                const response = await axios.post(fullUrlUpdatepassword, { urlusername, temppassword });
                 if(response.data.status){
                     window.location.href ='../../login.html'
                 }
